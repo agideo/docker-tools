@@ -1,0 +1,20 @@
+ server {
+    listen 80;
+    server_name _;
+    resolver <%= ENV.fetch('DNS_SERVER') { '127.0.0.1' } %> valid=1s;
+
+    client_max_body_size 0;
+
+    location / {
+        proxy_redirect     off;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Forwarded-Host $host;
+        proxy_set_header   X-Forwarded-Server $host;
+        proxy_set_header   X-Real-IP        $remote_addr;
+        proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_set_header   X-NginX-Proxy true;
+        proxy_buffering    on;
+        proxy_pass http://$host;
+    }
+}

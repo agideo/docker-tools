@@ -1,0 +1,8 @@
+stream {
+    server {
+        listen 443;
+        ssl_preread on;
+        resolver <%= ENV.fetch('DNS_SERVER') { '127.0.0.1' } %> valid=1s;
+        proxy_pass $ssl_preread_server_name:$server_port;
+    }
+}
