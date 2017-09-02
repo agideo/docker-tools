@@ -1,7 +1,7 @@
  server {
     listen 80;
     server_name _;
-    resolver <%= ENV.fetch('DNS_SERVER') { '127.0.0.1' } %> valid=1s;
+    resolver <%= ENV.fetch('DNS_SERVER') { '8.8.8.8' } %> valid=3600s;
 
     client_max_body_size 0;
 
@@ -15,6 +15,6 @@
         proxy_set_header   X-Forwarded-Proto $scheme;
         proxy_set_header   X-NginX-Proxy true;
         proxy_buffering    on;
-        proxy_pass http://$host;
+        proxy_pass http://$host<%= ENV['BACK_DOMAIN'] %>;
     }
 }
