@@ -1,0 +1,11 @@
+version: "2"
+
+services:
+  main:
+    image: alvin2ye/taillog
+    environment:
+      - LINE_COUNT=100
+    volumes:
+      - "./test.log:/opt/taillog.log"
+    ports:
+      - "8005:80"
