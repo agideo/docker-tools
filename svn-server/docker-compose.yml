@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  main:
+    image: buildpack-deps:stretch
+    command: sh -c 'tail -f /dev/null'
+
+  test:
+    build: .
+    image: svn-server
+    volumes:
+      - "./data/config:/var/lib/svn/config"
+      - "./data/repos:/var/lib/svn/repos"
+    ports:
+      - "10080:80"
